@@ -86,8 +86,6 @@ function App() {
         <div className="cards">
           {cards}
         </div>
-
-        <button onClick={resetList}>Reset</button>
         
         
      </div>
