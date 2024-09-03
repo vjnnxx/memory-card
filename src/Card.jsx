@@ -1,10 +1,12 @@
-function Card ({imageSource, name}){
+import './App.css'
+
+function Card ({imageSource, name, id, action}){
 
     return (
-        <div className="card">
-            <p>Sprite</p>
-            <p>Nome Pokemon</p>
-        </div>
+        <button className="card" onClick={() => action(id)}>
+            <img src={imageSource}/>
+            <p>{name}</p>
+        </button>
     )
 }
 

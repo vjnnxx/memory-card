@@ -5,8 +5,26 @@ import Card from './Card';
 function App() {
 
   const [pokemon, setPokemon] = useState([]);
+  const [update, setUpdate] = useState(0);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
+  const [clickedPokemon, setClickedPokemon] = useState([]);
+
+
+  function emptyArray(array){
+    while(array.length > 0){
+      array.pop();
+    }
+
+    return array
+
+  }
 
   useEffect(()=>{
+
+    if (score > bestScore){
+      setBestScore(score);
+    }
 
     const numbers = [];
 
@@ -17,8 +35,13 @@ function App() {
       .catch(error => console.error('Erro:',error));
     }
 
-    for(let i = 0; i < 10; i++){
-      let randomNumber = parseInt((Math.random() * 100) + 1);
+    for(let i = 0; i < 12; i++){
+
+      let randomNumber = parseInt((Math.random() * 50) + 1);
+
+      while (numbers.includes(randomNumber)) {
+        randomNumber = parseInt((Math.random() * 50) + 1);
+      }
 
       numbers.push(randomNumber);
       
@@ -32,18 +55,41 @@ function App() {
 
     Promise.all(promises).then(result => setPokemon(result));
 
-  }, []);
+  }, [update]);
 
-  console.log(pokemon)
-
+  const cards = pokemon.map((el) => <Card key={el.id} imageSource={el.sprites.front_default} name={el.name} id={el.id} action={resetList}> </Card> );
   
+  function resetList(id){
+    setUpdate(update + 1);
+    
+    if (clickedPokemon.includes(id)){
+      setClickedPokemon(emptyArray(clickedPokemon))
+      setScore(0);
+      return
+      
+    } else {
+      setClickedPokemon([...clickedPokemon, id])
+      setScore(score + 1);
+    }
+  }
 
 
   return (
     <>
      <div className="main">
         
-        <Card></Card>
+        <h1>Memory Game</h1>
+
+        <p>Pontuação: {score}</p>
+        <p>Recorde: {bestScore}</p>
+
+        <div className="cards">
+          {cards}
+        </div>
+
+        <button onClick={resetList}>Reset</button>
+        
+        
      </div>
     </>
   )
