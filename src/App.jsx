@@ -55,6 +55,8 @@ function App() {
 
     Promise.all(promises).then(result => setPokemon(result));
 
+    //Colocar todos os 50 pokemon dentro de um array desde o inicio e selecionar randomicamente pra mostrar?
+
   }, [update]);
 
   const cards = pokemon.map((el) => <Card key={el.id} imageSource={el.sprites.front_default} name={el.name} id={el.id} action={resetList}> </Card> );
