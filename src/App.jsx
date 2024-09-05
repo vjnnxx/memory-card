@@ -55,7 +55,6 @@ function App() {
 
     Promise.all(promises).then(result => setPokemon(result));
 
-    //Colocar todos os 50 pokemon dentro de um array desde o inicio e selecionar randomicamente pra mostrar?
 
   }, [update]);
 
